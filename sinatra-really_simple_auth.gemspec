@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
 
   s.required_rubygems_version = ">= 1.3.6"
+  s.summary = 'Single user authentication for sinatra'
 
   s.add_runtime_dependency 'sinatra', '~> 1.0'
   s.add_runtime_dependency 'haml', '~> 3.0'
