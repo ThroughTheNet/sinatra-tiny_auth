@@ -3,7 +3,7 @@ require File.expand_path("../lib/sinatra-simple_auth/version", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "sinatra-simple_auth"
-  s.version     = Sinatra::Simpleauth::VERSION
+  s.version     = Sinatra::SimpleAuth::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = []
   s.email       = []
@@ -20,3 +20,4 @@ Gem::Specification.new do |s|
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
   s.require_path = 'lib'
 end
+
