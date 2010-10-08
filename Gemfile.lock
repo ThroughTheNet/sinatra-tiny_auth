@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    sinatra-simple_auth (0.0.1)
+      activesupport (>= 2.3)
+      haml (~> 3.0)
+      sinatra (~> 1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.0.0)
+    haml (3.0.21)
+    rack (1.2.1)
+    shoulda (2.11.3)
+    sinatra (1.0)
+      rack (>= 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport (>= 2.3)
+  bundler (>= 1.0.0)
+  haml (~> 3.0)
+  shoulda (~> 2.0)
+  sinatra (~> 1.0)
+  sinatra-simple_auth!

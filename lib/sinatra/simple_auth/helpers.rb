@@ -1,6 +1,10 @@
+require 'digest/sha1'
+require 'active_support/secure_random' unless defined?(SecureRandom)
+
 module Sinatra
   module SimpleAuth
     module Helpers
+
 
       def authorize!
         token = SecureRandom.hex(16)
@@ -14,13 +18,17 @@ module Sinatra
         end
       end
 
-      def require_authorization!(token = session[:token])
+      def check_authorization(token = session[:token])
         begin
-          read_token = File.read(File.join(File.dirname(__FILE__), 'token'))
+          read_token = File.read(File.join(settings.root, 'token'))
           return token == read_token
         rescue Exception
-          throw :halt, [403, haml(:error)]
+          return false
         end
+      end
+
+      def require_login!
+        redirect '/login' unless check_authorization
       end
 
       def check_login(password)

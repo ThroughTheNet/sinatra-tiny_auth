@@ -1,12 +1,17 @@
 require 'sinatra/base'
+require 'sinatra/simple_auth/helpers'
 
 module Sinatra
   module SimpleAuth
 
+
     def self.registered(app)
+
+      app.helpers Sinatra::SimpleAuth::Helpers
       app.enable :sessions
 
       app.set :login_destination, '/'
+      app.set :logout_destination, '/'
 
       app.get '/login/?' do
         haml :login
@@ -22,7 +27,7 @@ module Sinatra
 
       app.get '/logout/?' do
         logout!
-        redirect settings.login_destination
+        redirect settings.logout_destination
       end
     end
   end
