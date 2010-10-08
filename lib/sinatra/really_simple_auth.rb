@@ -1,13 +1,13 @@
 require 'sinatra/base'
-require 'sinatra/simple_auth/helpers'
+require 'sinatra/really_simple_auth/helpers'
 
 module Sinatra
-  module SimpleAuth
+  module ReallySimpleAuth
 
 
     def self.registered(app)
 
-      app.helpers Sinatra::SimpleAuth::Helpers
+      app.helpers Sinatra::ReallySimpleAuth::Helpers
       app.enable :sessions
 
       app.set :login_destination, '/'

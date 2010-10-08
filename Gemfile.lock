@@ -26,3 +26,4 @@ DEPENDENCIES
   shoulda (~> 2.0)
   sinatra (~> 1.0)
   sinatra-simple_auth!
+

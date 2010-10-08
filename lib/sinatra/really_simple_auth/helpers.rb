@@ -2,7 +2,7 @@ require 'digest/sha1'
 require 'active_support/secure_random' unless defined?(SecureRandom)
 
 module Sinatra
-  module SimpleAuth
+  module ReallySimpleAuth
     module Helpers
 
 
