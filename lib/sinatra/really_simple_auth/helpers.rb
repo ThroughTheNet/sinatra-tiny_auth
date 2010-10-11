@@ -1,10 +1,30 @@
 require 'digest/sha1'
+require 'socket'
 require 'active_support/secure_random' unless defined?(SecureRandom)
 
 module Sinatra
   module ReallySimpleAuth
     module Helpers
 
+      def require_login!
+        redirect '/login' unless check_authorization
+      end
+
+      def logout!
+        session[:token] = nil
+      end
+
+      def check_login(password)
+        hostname = Socket.gethostname
+        puts hostname
+        salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
+        puts 'i: '+salted_crypted_password
+        puts 'f: '+crypted_password_from_file
+
+        authorize! if salted_crypted_password == crypted_password_from_file
+      end
+
+      private
 
       def authorize!
         token = SecureRandom.hex(16)
@@ -27,18 +47,9 @@ module Sinatra
         end
       end
 
-      def require_login!
-        redirect '/login' unless check_authorization
+      def crypted_password_from_file
+        File.read(File.join(settings.root, 'password_digest'))
       end
-
-      def check_login(password)
-        authorize! if Digest::SHA1.hexdigest(password) == options.password_digest
-      end
-
-      def logout!
-        session[:token] = nil
-      end
-
     end
   end
 end
