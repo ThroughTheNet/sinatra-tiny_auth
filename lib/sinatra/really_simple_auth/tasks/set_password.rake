@@ -40,7 +40,10 @@ namespace 'really_simple_auth' do
       f.chmod 0600
     end
 
-    FileUtils.rm 'token' if File.exists? 'token'
+   File.open('token', 'w') do |f|
+      f.write(nil)
+      f.chmod 0600
+    end
 
     puts 'Success!'
   end
