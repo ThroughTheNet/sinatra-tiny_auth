@@ -18,8 +18,6 @@ module Sinatra
         hostname = Socket.gethostname
         puts hostname
         salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
-        puts 'i: '+salted_crypted_password
-        puts 'f: '+crypted_password_from_file
 
         authorize! if salted_crypted_password == crypted_password_from_file
       end
@@ -40,7 +38,7 @@ module Sinatra
 
       def check_authorization(token = session[:token])
         begin
-          read_token = File.read(File.join(settings.root, 'token'))
+          read_token = File.read(File.join(settings.root, 'tmp/token'))
           return token == read_token
         rescue Exception
           return false
@@ -48,7 +46,7 @@ module Sinatra
       end
 
       def crypted_password_from_file
-        File.read(File.join(settings.root, 'password_digest'))
+        File.read(File.join(settings.root, 'tmp/password_digest'))
       end
     end
   end

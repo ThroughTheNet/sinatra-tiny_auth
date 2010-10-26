@@ -35,12 +35,12 @@ namespace 'really_simple_auth' do
     hostname = Socket.gethostname
     salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
 
-    File.open('password_digest', 'w') do |f|
+    File.open('tmp/password_digest', 'w') do |f|
       f.write(salted_crypted_password)
       f.chmod 0600
     end
 
-   File.open('token', 'w') do |f|
+   File.open('tmp/token', 'w') do |f|
       f.write(nil)
       f.chmod 0600
     end
