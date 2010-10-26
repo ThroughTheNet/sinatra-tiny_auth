@@ -27,7 +27,7 @@ module Sinatra
       def authorize!
         token = SecureRandom.hex(16)
         session[:token] = token
-        path = File.join(settings.root, 'token')
+        path = File.join(settings.root, 'tmp/token')
         begin
           File.open(path, 'w') {|f| f.write(token) }
           true
