@@ -3,11 +3,11 @@ require 'socket'
 require 'active_support/secure_random' unless defined?(SecureRandom)
 
 module Sinatra
-  module ReallySimpleAuth
+  module TinyAuth
     module Helpers
 
       def require_login!
-        redirect '/login' unless check_authorization
+        redirect settings.login_path unless check_authorization
       end
 
       def logout!
@@ -16,10 +16,13 @@ module Sinatra
 
       def check_login(password)
         hostname = Socket.gethostname
-        puts hostname
         salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
 
-        authorize! if salted_crypted_password == crypted_password_from_file
+        if salted_crypted_password == read_crypted_password
+          authorize! 
+        else
+          session[:token] = nil
+        end
       end
 
       private
@@ -27,7 +30,7 @@ module Sinatra
       def authorize!
         token = SecureRandom.hex(16)
         session[:token] = token
-        path = File.join(settings.root, 'tmp/token')
+        path = settings.token_path
         begin
           File.open(path, 'w') {|f| f.write(token) }
           true
@@ -38,15 +41,18 @@ module Sinatra
 
       def check_authorization(token = session[:token])
         begin
-          read_token = File.read(File.join(settings.root, 'tmp/token'))
           return token == read_token
         rescue Exception
           return false
         end
       end
+      
+      def read_token
+        File.read(settings.token_path)
+      end
 
-      def crypted_password_from_file
-        File.read(File.join(settings.root, 'tmp/password_digest'))
+      def read_crypted_password
+        File.read(settings.password_digest_path).chomp
       end
     end
   end

@@ -1,2 +1,2 @@
-rvm use --create ree@sinatra-really_simple_auth
+rvm use --create ree@sinatra-tiny_auth
 

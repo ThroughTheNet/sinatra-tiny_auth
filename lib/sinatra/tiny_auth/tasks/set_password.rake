@@ -3,7 +3,7 @@ require 'socket'
 require 'fileutils'
 
 desc 'change the password'
-namespace 'really_simple_auth' do
+namespace 'tiny_auth' do
 
   task 'set_password' do
     state = `stty -g`
