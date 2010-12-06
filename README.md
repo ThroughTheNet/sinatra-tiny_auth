@@ -7,7 +7,7 @@ It has no users database, there is only one user. Authentication is by password 
 
 This is intended for situations where you want to protect a simple sinatra app intended for use by just one person.
 
-#THIS GEM IS A WORK IN PROGRESS! PLEASE DO NOT USE IT ON A REAL WEBSITE IT MAY WELL NOT BE SECURE YET!
+#THIS GEM IS A WORK IN PROGRESS! PLEASE DO NOT USE IT ON A REAL WEBSITE! IT MAY WELL NOT BE SECURE YET!
 You have been warned!
 
 This project is MIT licensed.
