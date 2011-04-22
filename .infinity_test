@@ -1,0 +1,17 @@
+infinity_test do
+  use :test_framework => :rspec
+  
+  before_run do
+    clear :terminal
+  end
+  
+  heuristics do
+    add(/^lib\/.*/) do |file|
+      run :all => :tests
+    end
+    
+    add(/^spec\/.*\.(rb|haml|erb)$/) do |file|
+      run :all => :tests
+    end
+  end
+end

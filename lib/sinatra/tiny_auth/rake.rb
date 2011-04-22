@@ -1,4 +1,6 @@
-require 'digest/sha1'
+require 'bcrypt'
+require 'rake'
+# require 'digest/sha1'
 require 'socket'
 require 'fileutils'
 
@@ -32,11 +34,10 @@ namespace 'tiny_auth' do
 
     raise 'Passwords do not match! Try again.' unless password == password_confirmation
 
-    hostname = Socket.gethostname
-    salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
+    crypted_password = BCrypt::Password.create(password)
 
     File.open('tmp/password_digest', 'w') do |f|
-      f.write(salted_crypted_password)
+      f.write(crypted_password)
       f.chmod 0600
     end
 

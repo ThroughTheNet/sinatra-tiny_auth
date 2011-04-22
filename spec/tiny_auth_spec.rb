@@ -23,7 +23,7 @@ describe Sinatra::TinyAuth do
     
     it "redirects to /login" do
       last_response.should be_redirect
-      URI.parse(last_response.location).path.should == "/login"
+      URI.parse(last_response.location).path.should match("/login")
     end
   end
   
@@ -39,7 +39,6 @@ describe Sinatra::TinyAuth do
     
     context 'with valid password' do
       before(:each) do
-        Socket.stub!(:gethostname).and_return('example.org')
         post '/login', :password => 'test'
       end
       
@@ -54,6 +53,13 @@ describe Sinatra::TinyAuth do
       it 'creates the token file' do
         File.exists?(File.join(File.dirname(__FILE__), 'dummy', 'tmp', 'token')).should be_true
       end
+      
+      it 'subsequently allows access to routes with the require_login! helper' do
+        get '/private'
+        
+        last_response.should_not be_redirect
+        last_response.body.should match(/success/)
+      end
     end
     
     context 'with invalid password' do
@@ -63,11 +69,19 @@ describe Sinatra::TinyAuth do
     
       it 'redirects back to /login' do
         last_response.should be_redirect
-        URI.parse(last_response.location).path.should == "/login"
+        URI.parse(last_response.location).path.should match("/login")
       end
       
       it 'doesnt create the token file' do
         File.exists?(File.join(File.dirname(__FILE__), 'dummy', 'tmp', 'token')).should be_false
+      end
+      
+      it 'does not subsequently allow access to routes with the require_login! helper' do
+        get '/private'
+        
+        last_response.should be_redirect
+        URI.parse(last_response.location).path.should match("/login")
+        last_response.body.should_not match(/success/)
       end
     end
     

@@ -1,5 +1,4 @@
-require 'digest/sha1'
-require 'socket'
+require 'bcrypt'
 require 'active_support/secure_random' unless defined?(SecureRandom)
 
 module Sinatra
@@ -7,7 +6,7 @@ module Sinatra
     module Helpers
 
       def require_login!
-        redirect settings.login_path unless check_authorization
+        redirect settings.tiny_auth[:login_path] unless check_authorization
       end
 
       def logout!
@@ -15,10 +14,7 @@ module Sinatra
       end
 
       def check_login(password)
-        hostname = Socket.gethostname
-        salted_crypted_password = Digest::SHA1.hexdigest(password+hostname)
-
-        if salted_crypted_password == read_crypted_password
+        if ::BCrypt::Password.new(read_crypted_password) == password
           authorize! 
         else
           session[:token] = nil
@@ -30,7 +26,7 @@ module Sinatra
       def authorize!
         token = SecureRandom.hex(16)
         session[:token] = token
-        path = settings.token_path
+        path = settings.tiny_auth[:token_path]
         begin
           File.open(path, 'w') {|f| f.write(token) }
           true
@@ -48,11 +44,11 @@ module Sinatra
       end
       
       def read_token
-        File.read(settings.token_path)
+        File.read(settings.tiny_auth[:token_path])
       end
 
       def read_crypted_password
-        File.read(settings.password_digest_path).chomp
+        File.read(settings.tiny_auth[:password_digest_path]).chomp
       end
     end
   end
