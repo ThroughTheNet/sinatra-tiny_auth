@@ -35,6 +35,8 @@ namespace 'tiny_auth' do
     raise 'Passwords do not match! Try again.' unless password == password_confirmation
 
     crypted_password = BCrypt::Password.create(password)
+    
+    Dir.mkdir('tmp') unless File.exist? 'tmp'
 
     File.open('tmp/password_digest', 'w') do |f|
       f.write(crypted_password)
