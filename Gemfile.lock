@@ -14,7 +14,12 @@ GEM
     activesupport (3.0.3)
     awesome_print (0.3.1)
     bcrypt-ruby (2.1.2)
+    chalofa_ruby-progressbar (0.0.9.1)
     diff-lcs (1.1.2)
+    fuubar (0.0.4)
+      chalofa_ruby-progressbar (~> 0.0.9)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.1.4)
     haml (3.0.24)
     rack (1.2.1)
     rack-test (0.5.6)
@@ -26,6 +31,7 @@ GEM
     rspec-core (2.2.1)
     rspec-expectations (2.2.0)
       diff-lcs (~> 1.1.2)
+    rspec-instafail (0.1.7)
     rspec-mocks (2.2.0)
     sinatra (1.1.0)
       rack (~> 1.1)
@@ -39,6 +45,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print (> 0)
   bundler (>= 1.0.0)
+  fuubar (> 0)
   rack-test (> 0)
   rspec (~> 2)
   sinatra-tiny_auth!
