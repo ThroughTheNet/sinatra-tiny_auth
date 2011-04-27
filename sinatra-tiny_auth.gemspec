@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 2'
   s.add_development_dependency 'rack-test', '>0'
   s.add_development_dependency 'awesome_print', '>0'
+  s.add_development_dependency 'fuubar', '>0'
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

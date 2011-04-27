@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/tiny_auth/helpers'
+require 'sinatra/tiny_auth/authorizer'
 require 'active_support/core_ext/hash/reverse_merge'
 require 'sinatra/tiny_auth/rake'
 
@@ -11,6 +12,8 @@ module Sinatra
 
       app.helpers Sinatra::TinyAuth::Helpers
       app.enable :sessions
+      
+      Authorizer.app = app
       
       defaults = {
         :login_path => '/login/?',
@@ -30,7 +33,7 @@ module Sinatra
       end
 
       app.post app.settings.tiny_auth[:login_path] do
-        if check_login(params[:password])
+        if do_login(params[:password])
           redirect settings.tiny_auth[:login_destination]
         else
           redirect settings.tiny_auth[:login_path]
