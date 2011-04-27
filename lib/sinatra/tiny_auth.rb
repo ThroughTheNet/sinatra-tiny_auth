@@ -11,7 +11,7 @@ module Sinatra
     def self.registered(app)
 
       app.helpers Sinatra::TinyAuth::Helpers
-      app.enable :sessions
+      app.enable :sessions unless app.sessions?
       
       Authorizer.app = app
       
