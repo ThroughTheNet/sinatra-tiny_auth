@@ -6,7 +6,7 @@ module Sinatra
     module Helpers
 
       def require_login!
-        redirect settings.tiny_auth[:login_path] unless Authorizer.check_authorization(session[:token])
+        redirect settings.tiny_auth[:login_path] unless logged_in?
       end
 
       def logout!
@@ -14,7 +14,7 @@ module Sinatra
       end
       
       def logged_in?
-        session[:token].present?
+        @logged_in ||= !!Authorizer.check_authorization(session[:token])
       end
 
       def do_login(password)
