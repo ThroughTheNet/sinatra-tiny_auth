@@ -12,9 +12,9 @@ module Sinatra
 
       app.helpers Sinatra::TinyAuth::Helpers
       app.enable :sessions unless app.sessions?
-      
+
       Authorizer.app = app
-      
+
       defaults = {
         :login_path => '/login/?',
         :logout_path => '/logout/?',
@@ -24,7 +24,7 @@ module Sinatra
         :login_destination => '/',
         :logout_destination => '/'
         }
-      
+
       app.set :tiny_auth, {} unless app.respond_to?(:tiny_auth) && app.settings.tiny_auth.is_a?(Hash)
       app.settings.tiny_auth.reverse_merge!(defaults)
 

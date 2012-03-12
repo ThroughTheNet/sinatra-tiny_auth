@@ -1,6 +1,3 @@
-require 'bcrypt'
-require 'active_support/secure_random' unless defined?(SecureRandom)
-
 module Sinatra
   module TinyAuth
     module Helpers
@@ -12,7 +9,7 @@ module Sinatra
       def logout!
         session[:token] = nil
       end
-      
+
       def logged_in?
         @logged_in ||= !!Authorizer.check_authorization(session[:token])
       end

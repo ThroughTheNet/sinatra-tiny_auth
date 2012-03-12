@@ -1,3 +1,6 @@
+require 'bcrypt'
+require 'securerandom'
+
 module Sinatra
   module TinyAuth
     class Authorizer
