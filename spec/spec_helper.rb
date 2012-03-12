@@ -2,7 +2,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'sinatra/base'
 require 'sinatra/tiny_auth'
-require 'rspec'
+require 'RSpec'
 require 'rack/test'
 require 'fileutils'
 require 'ap'
@@ -16,7 +16,7 @@ class Thor
         #this stops thor littering the console during tests
       end
     end
-  end 
+  end
 end
 
 ENV["RACK_ENV"] ||= 'test'
@@ -30,8 +30,8 @@ module SpecHelperMethods
   end
 end
 
-Rspec.configure do |config|
-  config.mock_with :rspec
+RSpec.configure do |config|
+  config.mock_with :RSpec
   config.include Rack::Test::Methods
   config.include SpecHelperMethods
 end
@@ -39,12 +39,12 @@ end
 class TestApp < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__), 'dummy')
   register Sinatra::TinyAuth
-  
+
   get '/private' do
     require_login!
     'success'
   end
-  
+
   get '/public' do
     'success'
   end
