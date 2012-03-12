@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
   s.name        = "sinatra-tiny_auth"
   s.version     = Sinatra::TinyAuth::VERSION
   s.platform    = Gem::Platform::RUBY
+  s.authors     = ["JonnieCache"]
 
   s.required_rubygems_version = ">= 1.3.6"
   s.summary = 'Single user authentication for sinatra'
