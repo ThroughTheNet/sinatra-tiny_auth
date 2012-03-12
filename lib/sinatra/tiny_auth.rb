@@ -4,6 +4,10 @@ require 'sinatra/tiny_auth/authorizer'
 require 'active_support/core_ext/hash/reverse_merge'
 require 'sinatra/tiny_auth/rake'
 
+class Hash
+  include ActiveSupport::CoreExtensions::Hash::ReverseMerge
+end
+
 module Sinatra
   module TinyAuth
 
@@ -25,14 +29,15 @@ module Sinatra
         :logout_destination => '/'
         }
 
-      app.set :tiny_auth, {} unless app.respond_to?(:tiny_auth) && app.settings.tiny_auth.is_a?(Hash)
-      app.settings.tiny_auth.reverse_merge!(defaults)
+      app.set :tiny_auth, Hash.new unless app.respond_to?(:tiny_auth) && app.tiny_auth.is_a?(Hash)
 
-      app.get app.settings.tiny_auth[:login_path] do
+      app.tiny_auth.reverse_merge!(defaults)
+
+      app.get app.tiny_auth[:login_path] do
         Tilt.new(settings.tiny_auth[:login_form_template]).render
       end
 
-      app.post app.settings.tiny_auth[:login_path] do
+      app.post app.tiny_auth[:login_path] do
         if do_login(params[:password])
           redirect settings.tiny_auth[:login_destination]
         else
@@ -40,7 +45,7 @@ module Sinatra
         end
       end
 
-      app.get app.settings.tiny_auth[:logout_path] do
+      app.get app.tiny_auth[:logout_path] do
         logout!
         redirect settings.tiny_auth[:logout_destination]
       end

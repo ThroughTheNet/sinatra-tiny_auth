@@ -11,7 +11,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'sinatra', '~> 1.0'
   s.add_runtime_dependency 'haml', '~> 3.0'
-  s.add_runtime_dependency 'activesupport', '>= 2.3'
+  s.add_runtime_dependency 'sass', '~> 3.0'
+  s.add_runtime_dependency 'activesupport', '~> 2.3.0'
   s.add_runtime_dependency 'bcrypt-ruby', '>0'
   s.add_runtime_dependency 'rake', '>0'
   s.add_development_dependency "bundler", ">= 1.0.0"
